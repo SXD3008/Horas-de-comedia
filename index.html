@@ -3,23 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relógio de São Paulo</title>
+    <title>Relógio Analógico de São Paulo</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; }
-        #clock { font-size: 3rem; margin-top: 20px; }
+        .clock { 
+            position: relative; 
+            width: 200px; 
+            height: 200px; 
+            border: 8px solid #333; 
+            border-radius: 50%; 
+            margin: 50px auto; 
+        }
+        .hand {
+            position: absolute; 
+            bottom: 50%; 
+            left: 50%; 
+            background: #333; 
+            transform-origin: bottom;
+        }
+        .hour {
+            width: 6px; 
+            height: 50px; 
+            transform: rotate(0deg); 
+        }
+        .minute {
+            width: 4px; 
+            height: 70px; 
+            transform: rotate(0deg); 
+        }
+        .second {
+            width: 2px; 
+            height: 90px; 
+            background: red; 
+            transform: rotate(0deg); 
+        }
     </style>
     <script>
         function updateClock() {
             const now = new Date();
-            const options = { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            document.getElementById('clock').innerText = new Intl.DateTimeFormat('pt-BR', options).format(now);
+            const options = { timeZone: 'America/Sao_Paulo' };
+            const localTime = new Date(now.toLocaleString('en-US', options));
+
+            const seconds = localTime.getSeconds();
+            const minutes = localTime.getMinutes();
+            const hours = localTime.getHours();
+
+            const secondHand = document.querySelector('.second');
+            const minuteHand = document.querySelector('.minute');
+            const hourHand = document.querySelector('.hour');
+
+            const secondDeg = (seconds / 60) * 360;
+            const minuteDeg = (minutes / 60) * 360;
+            const hourDeg = (hours % 12) * 30 + (minutes / 2);
+
+            secondHand.style.transform = `rotate(${secondDeg}deg)`;
+            minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+            hourHand.style.transform = `rotate(${hourDeg}deg)`;
         }
+
         setInterval(updateClock, 1000);
         window.onload = updateClock;
     </script>
 </head>
 <body>
     <h1>Horário Atual em São Paulo</h1>
-    <div id="clock"></div>
+    <div class="clock">
+        <div class="hand hour"></div>
+        <div class="hand minute"></div>
+        <div class="hand second"></div>
+    </div>
 </body>
 </html>
