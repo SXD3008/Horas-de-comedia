@@ -1,29 +1,25 @@
-#include <stdio.h>
-#include <time.h>
-
-int main() {
-    // Variáveis para armazenar informações de tempo
-    time_t currentTime;
-    struct tm *localTime;
-
-    // Loop infinito para atualizar o relógio
-    while (1) {
-        // Obter o tempo atual
-        currentTime = time(NULL);
-        localTime = localtime(&currentTime);
-
-        // Extrair informações de hora, minutos e segundos
-        int hours = localTime->tm_hour;
-        int minutes = localTime->tm_min;
-        int seconds = localTime->tm_sec;
-
-        // Imprimir o tempo atual no formato de relógio
-        printf("\r%02d:%02d:%02d", hours, minutes, seconds);
-
-        // Esperar 1 segundo antes de atualizar novamente
-        fflush(stdout); // Limpar o buffer de saída
-        sleep(1);
-    }
-
-    return 0;
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio de São Paulo</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #clock { font-size: 3rem; margin-top: 20px; }
+    </style>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('clock').innerText = new Intl.DateTimeFormat('pt-BR', options).format(now);
+        }
+        setInterval(updateClock, 1000);
+        window.onload = updateClock;
+    </script>
+</head>
+<body>
+    <h1>Horário Atual em São Paulo</h1>
+    <div id="clock"></div>
+</body>
+</html>
