@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relógio Analógico de São Paulo</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
         .clock { 
             position: relative; 
             width: 200px; 
             height: 200px; 
             border: 8px solid #333; 
             border-radius: 50%; 
-            margin: 50px auto; 
+            margin: 20px auto; 
         }
         .hand {
             position: absolute; 
@@ -37,6 +37,10 @@
             background: red; 
             transform: rotate(0deg); 
         }
+        #digital-clock {
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
     </style>
     <script>
         function updateClock() {
@@ -51,6 +55,7 @@
             const secondHand = document.querySelector('.second');
             const minuteHand = document.querySelector('.minute');
             const hourHand = document.querySelector('.hour');
+            const digitalClock = document.getElementById('digital-clock');
 
             const secondDeg = (seconds / 60) * 360;
             const minuteDeg = (minutes / 60) * 360;
@@ -59,6 +64,8 @@
             secondHand.style.transform = `rotate(${secondDeg}deg)`;
             minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
             hourHand.style.transform = `rotate(${hourDeg}deg)`;
+
+            digitalClock.innerText = localTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         }
 
         setInterval(updateClock, 1000);
@@ -72,5 +79,6 @@
         <div class="hand minute"></div>
         <div class="hand second"></div>
     </div>
+    <div id="digital-clock"></div>
 </body>
 </html>
